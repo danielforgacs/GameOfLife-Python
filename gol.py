@@ -4,10 +4,10 @@ import time
 
 DEAD = ' '
 LIVE = 'o'
-WIDTH = 150
-HEIGHT = 35
+WIDTH = 640
+HEIGHT = 480
 # SLEEP = 1 / 48
-MAX_GEN = 2
+MAX_GEN = 500
 
 def gen_map():
     map_x = ()
