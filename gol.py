@@ -18,10 +18,19 @@ def calc_time_step(world, gen):
         newline = ()
         for y in range(len(world[x])):
             neibours = 0
-            if x-1 == -1:
-                continue
-            if x+1 == len(world):
-                continue
+
+            for i in [-1, 0, 1]:
+                for l in [-1, 0, 1]:
+                    nx, ny = x+i, y+l
+                    if nx < 0 or nx > len(world)-1:
+                        continue
+                    if ny < 0 or ny > len(world)-1:
+                        continue
+                    if (nx, ny) == (x, y):
+                        continue
+                    if world[nx][ny] == 1:
+                        neibours += 1
+
             if world[x][y] == 1:
                 if neibours in [0, 1]:
                     newvalue = 0
@@ -32,7 +41,8 @@ def calc_time_step(world, gen):
                     newvalue = 1
                 else:
                     newvalue = 0
-            newline = newline+(newvalue,)
+            # newline = newline+(newvalue,)
+            newline = newline+(neibours,)
         newworld = newworld+ (newline,)
     return newworld, gen+1
 
