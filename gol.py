@@ -3,15 +3,16 @@ import time
 
 DEAD = ' '
 LIVE = 'O'
-SIDE = 36
+WIDTH = 4
+HEIGHT = 4
 SLEEP = 1 / 24
 MAX_GEN = 150
 
 def gen_map():
     map_x = ()
-    for k in range(SIDE):
+    for k in range(WIDTH):
         map_y = ()
-        for j in range(SIDE):
+        for j in range(HEIGHT):
             map_y = map_y + (random.choice([DEAD, LIVE]), )
         map_x = map_x + (map_y,)
     return map_x, 0
@@ -29,7 +30,7 @@ def calc_time_step(world, gen):
                     nx, ny = x+i, y+l
                     if nx < 0 or nx > len(world)-1:
                         continue
-                    if ny < 0 or ny > len(world)-1:
+                    if ny < 0 or ny > len(world[x])-1:
                         continue
                     if (nx, ny) == (x, y):
                         continue
