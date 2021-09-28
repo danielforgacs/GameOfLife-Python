@@ -53,7 +53,6 @@ def print_world(world, gen):
         print(k)
 
 def main():
-    world, gen = gen_map()
     world = (
         ('.', '.', '.', '.', '.', '.', '.'),
         ('.', '.', 'x', '.', '.', '.', '.'),
@@ -63,6 +62,7 @@ def main():
         ('.', '.', '.', '.', '.', '.', '.'),
         ('.', '.', '.', '.', '.', '.', '.'),
     )
+    world, gen = gen_map()
     print_world(world, gen)
 
     for k in range(4):
