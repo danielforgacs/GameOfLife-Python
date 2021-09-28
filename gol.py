@@ -2,16 +2,17 @@ import random
 import time
 
 DEAD = ' '
-LIVE = 'O'
-SIDE = 36
-SLEEP = 1 / 24
-MAX_GEN = 150
+LIVE = 'o'
+WIDTH = 150
+HEIGHT = 35
+SLEEP = 1 / 48
+MAX_GEN = 1500
 
 def gen_map():
     map_x = ()
-    for k in range(SIDE):
+    for k in range(HEIGHT):
         map_y = ()
-        for j in range(SIDE):
+        for j in range(WIDTH):
             map_y = map_y + (random.choice([DEAD, LIVE]), )
         map_x = map_x + (map_y,)
     return map_x, 0
@@ -29,7 +30,7 @@ def calc_time_step(world, gen):
                     nx, ny = x+i, y+l
                     if nx < 0 or nx > len(world)-1:
                         continue
-                    if ny < 0 or ny > len(world)-1:
+                    if ny < 0 or ny > len(world[x])-1:
                         continue
                     if (nx, ny) == (x, y):
                         continue
@@ -50,23 +51,26 @@ def calc_time_step(world, gen):
     return newworld, gen+1
 
 def print_world(world, gen):
-    print('gen:', gen)
+    print('gen: {} - dimensions: {} x {}: {}'.format(gen, WIDTH, HEIGHT, WIDTH*HEIGHT))
+    lines = ''
     for k in world:
         line = ''
         for xy in k:
             line += DEAD if xy == DEAD else LIVE
-        print(line)
+        # print(line)
+        lines += line+'\n'
+    print(lines)
 
 def main():
-    world = (
-        ('.', '.', '.', '.', '.', '.', '.'),
-        ('.', '.', 'x', '.', '.', '.', '.'),
-        ('.', '.', 'x', 'x', '.', '.', '.'),
-        ('.', '.', 'x', '.', '.', '.', '.'),
-        ('.', '.', '.', '.', '.', '.', '.'),
-        ('.', '.', '.', '.', '.', '.', '.'),
-        ('.', '.', '.', '.', '.', '.', '.'),
-    )
+    # world = (
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    #     ('.', '.', 'x', '.', '.', '.', '.'),
+    #     ('.', '.', 'x', 'x', '.', '.', '.'),
+    #     ('.', '.', 'x', '.', '.', '.', '.'),
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    # )
     world, gen = gen_map()
     print_world(world, gen)
 
