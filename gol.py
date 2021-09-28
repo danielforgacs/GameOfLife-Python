@@ -2,10 +2,10 @@ import random
 import time
 
 DEAD = ' '
-LIVE = 'x'
-SIDE = 26
-SLEEP = 0.1
-MAX_GEN = 100
+LIVE = 'O'
+SIDE = 36
+SLEEP = 1 / 24
+MAX_GEN = 150
 
 def gen_map():
     map_x = ()
@@ -52,7 +52,10 @@ def calc_time_step(world, gen):
 def print_world(world, gen):
     print('gen:', gen)
     for k in world:
-        print(k)
+        line = ''
+        for xy in k:
+            line += DEAD if xy == DEAD else LIVE
+        print(line)
 
 def main():
     world = (
