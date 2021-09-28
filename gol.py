@@ -3,16 +3,16 @@ import time
 
 DEAD = ' '
 LIVE = 'O'
-WIDTH = 4
-HEIGHT = 4
+WIDTH = 80
+HEIGHT = 36
 SLEEP = 1 / 24
 MAX_GEN = 150
 
 def gen_map():
     map_x = ()
-    for k in range(WIDTH):
+    for k in range(HEIGHT):
         map_y = ()
-        for j in range(HEIGHT):
+        for j in range(WIDTH):
             map_y = map_y + (random.choice([DEAD, LIVE]), )
         map_x = map_x + (map_y,)
     return map_x, 0
