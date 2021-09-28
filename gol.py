@@ -64,7 +64,7 @@ def print_world(world, gen):
 
 def save_image(world, gen):
     img = Image.new('RGB', (HEIGHT, WIDTH))
-    imgname = 'life.{:<04d}.png'.format(gen)
+    imgname = 'life.{:>04d}.png'.format(gen)
     for x in range(len(world)-1):
         for y in range(len(world[x])-1):
             r = 0 if world[x][y] == DEAD else 255
