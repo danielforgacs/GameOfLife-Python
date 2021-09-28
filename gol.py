@@ -2,11 +2,11 @@ import random
 import time
 
 DEAD = ' '
-LIVE = 'O'
-WIDTH = 80
-HEIGHT = 36
-SLEEP = 1 / 24
-MAX_GEN = 150
+LIVE = 'o'
+WIDTH = 150
+HEIGHT = 75
+SLEEP = 1 / 48
+MAX_GEN = 1500
 
 def gen_map():
     map_x = ()
@@ -51,23 +51,26 @@ def calc_time_step(world, gen):
     return newworld, gen+1
 
 def print_world(world, gen):
-    print('gen:', gen)
+    print('gen: {} - dimensions: {} x {}: {}'.format(gen, WIDTH, HEIGHT, WIDTH*HEIGHT))
+    lines = ''
     for k in world:
         line = ''
         for xy in k:
             line += DEAD if xy == DEAD else LIVE
-        print(line)
+        # print(line)
+        lines += line+'\n'
+    print(lines)
 
 def main():
-    world = (
-        ('.', '.', '.', '.', '.', '.', '.'),
-        ('.', '.', 'x', '.', '.', '.', '.'),
-        ('.', '.', 'x', 'x', '.', '.', '.'),
-        ('.', '.', 'x', '.', '.', '.', '.'),
-        ('.', '.', '.', '.', '.', '.', '.'),
-        ('.', '.', '.', '.', '.', '.', '.'),
-        ('.', '.', '.', '.', '.', '.', '.'),
-    )
+    # world = (
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    #     ('.', '.', 'x', '.', '.', '.', '.'),
+    #     ('.', '.', 'x', 'x', '.', '.', '.'),
+    #     ('.', '.', 'x', '.', '.', '.', '.'),
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    #     ('.', '.', '.', '.', '.', '.', '.'),
+    # )
     world, gen = gen_map()
     print_world(world, gen)
 
