@@ -18,6 +18,10 @@ def calc_time_step(world, gen):
         newline = ()
         for y in range(len(world[x])):
             neibours = 0
+            if x-1 == -1:
+                continue
+            if x+1 == len(world):
+                continue
             if world[x][y] == 1:
                 if neibours in [0, 1]:
                     newvalue = 0
