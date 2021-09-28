@@ -4,7 +4,7 @@ import time
 DEAD = ' '
 LIVE = 'o'
 WIDTH = 150
-HEIGHT = 75
+HEIGHT = 35
 SLEEP = 1 / 48
 MAX_GEN = 1500
 
