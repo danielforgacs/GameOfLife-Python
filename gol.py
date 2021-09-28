@@ -3,7 +3,7 @@ import time
 
 DEAD = ' '
 LIVE = 'x'
-SIDE = 15
+SIDE = 26
 SLEEP = 0.1
 MAX_GEN = 100
 
