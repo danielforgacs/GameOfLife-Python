@@ -62,25 +62,37 @@ def print_world(world, gen):
         lines += line+'\n'
     print(lines)
 
-def main():
-    world, gen = gen_map()
-    print_world(world, gen)
+def save_image(world, gen):
     img = Image.new('RGB', (HEIGHT, WIDTH))
     imgname = 'life.{:<04d}.png'.format(gen)
+    for x in range(len(world)-1):
+        for y in range(len(world[x])-1):
+            r = 0 if world[x][y] == DEAD else 255
+            img.putpixel((x, y), (r, r, r))
     img.save(imgname)
+
+def main():
+    world, gen = gen_map()
+    save_image(world, gen)
+    # print_world(world, gen)
+    # img = Image.new('RGB', (HEIGHT, WIDTH))
+    # imgname = 'life.{:<04d}.png'.format(gen)
+    # img.save(imgname)
 
     for k in range(MAX_GEN):
         world, gen = calc_time_step(world, gen)
-        img = Image.new('RGB', (HEIGHT, WIDTH))
-        imgname = 'life.{:<04d}.png'.format(gen)
+        save_image(world, gen)
+        # save
+        # img = Image.new('RGB', (HEIGHT, WIDTH))
+        # imgname = 'life.{:<04d}.png'.format(gen)
 
-        for x in range(len(world)-1):
-            for y in range(len(world[x])-1):
-                r = 0 if world[x][y] == DEAD else 255
-                img.putpixel((x, y), (r, r, r))
+        # for x in range(len(world)-1):
+        #     for y in range(len(world[x])-1):
+        #         r = 0 if world[x][y] == DEAD else 255
+        #         img.putpixel((x, y), (r, r, r))
 
-        img.save(imgname)
-        print_world(world, gen)
+        # img.save(imgname)
+        # print_world(world, gen)
         # time.sleep(SLEEP)
 
 
