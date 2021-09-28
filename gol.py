@@ -1,4 +1,5 @@
 import random
+import time
 
 WIDTH = 10
 
@@ -43,12 +44,25 @@ def print_world(world):
     print()
     for k in range(WIDTH):
         print(world[k])
+    time.sleep(1)
 
 def main():
     world = gen_map()
+    world = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]
     print_world(world)
 
-    for k in range(3):
+    for k in range(1):
         world = calc_time_step(world)
         print_world(world)
 
