@@ -58,7 +58,6 @@ def print_world(world, gen):
         line = ''
         for xy in k:
             line += DEAD if xy == DEAD else LIVE
-        # print(line)
         lines += line+'\n'
     print(lines)
 
@@ -74,27 +73,11 @@ def save_image(world, gen):
 def main():
     world, gen = gen_map()
     save_image(world, gen)
-    # print_world(world, gen)
-    # img = Image.new('RGB', (HEIGHT, WIDTH))
-    # imgname = 'life.{:<04d}.png'.format(gen)
-    # img.save(imgname)
 
     for k in range(MAX_GEN):
         world, gen = calc_time_step(world, gen)
         save_image(world, gen)
-        # save
-        # img = Image.new('RGB', (HEIGHT, WIDTH))
-        # imgname = 'life.{:<04d}.png'.format(gen)
-
-        # for x in range(len(world)-1):
-        #     for y in range(len(world[x])-1):
-        #         r = 0 if world[x][y] == DEAD else 255
-        #         img.putpixel((x, y), (r, r, r))
-
-        # img.save(imgname)
-        # print_world(world, gen)
-        # time.sleep(SLEEP)
-
 
 print('='*77)
 main()
+print('done.')
