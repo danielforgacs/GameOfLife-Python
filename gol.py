@@ -1,15 +1,17 @@
 import random
 import time
 
-DEAD = '_'
+DEAD = ' '
 LIVE = 'x'
+SIDE = 15
+SLEEP = 0.1
+MAX_GEN = 100
 
 def gen_map():
-    side = 4
     map_x = ()
-    for k in range(side):
+    for k in range(SIDE):
         map_y = ()
-        for j in range(side):
+        for j in range(SIDE):
             map_y = map_y + (random.choice([DEAD, LIVE]), )
         map_x = map_x + (map_y,)
     return map_x, 0
@@ -65,10 +67,10 @@ def main():
     world, gen = gen_map()
     print_world(world, gen)
 
-    for k in range(4):
+    for k in range(MAX_GEN):
         world, gen = calc_time_step(world, gen)
         print_world(world, gen)
-        time.sleep(0.5)
+        time.sleep(SLEEP)
 
 
 print('='*77)
