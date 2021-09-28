@@ -1,12 +1,13 @@
+from PIL import Image
 import random
 import time
+import datetime
 
 DEAD = ' '
 LIVE = 'o'
-WIDTH = 150
-HEIGHT = 35
-SLEEP = 1 / 48
-MAX_GEN = 1500
+WIDTH = 640
+HEIGHT = 480
+MAX_GEN = 100
 
 def gen_map():
     map_x = ()
@@ -57,28 +58,29 @@ def print_world(world, gen):
         line = ''
         for xy in k:
             line += DEAD if xy == DEAD else LIVE
-        # print(line)
         lines += line+'\n'
     print(lines)
 
+def save_image(world, gen):
+    img = Image.new('RGB', (WIDTH, HEIGHT))
+    imgname = 'life.{:>04d}.png'.format(gen)
+    for x in range(len(world)):
+        for y in range(len(world[x])):
+            r = 0 if world[x][y] == DEAD else 255
+            img.putpixel((y, x), (r, r, r))
+    img.save(imgname)
+    return imgname
+
 def main():
-    # world = (
-    #     ('.', '.', '.', '.', '.', '.', '.'),
-    #     ('.', '.', 'x', '.', '.', '.', '.'),
-    #     ('.', '.', 'x', 'x', '.', '.', '.'),
-    #     ('.', '.', 'x', '.', '.', '.', '.'),
-    #     ('.', '.', '.', '.', '.', '.', '.'),
-    #     ('.', '.', '.', '.', '.', '.', '.'),
-    #     ('.', '.', '.', '.', '.', '.', '.'),
-    # )
     world, gen = gen_map()
-    print_world(world, gen)
+    save_image(world, gen)
 
     for k in range(MAX_GEN):
+        time0 = datetime.datetime.now()
         world, gen = calc_time_step(world, gen)
-        print_world(world, gen)
-        time.sleep(SLEEP)
-
+        imagename = save_image(world, gen)
+        print('gen: {}, image: {}, {}'.format(gen, imagename, datetime.datetime.now()-time0))
 
 print('='*77)
 main()
+print('done.')
