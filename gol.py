@@ -1,13 +1,13 @@
 from PIL import Image
 import random
 import time
+import datetime
 
 DEAD = ' '
 LIVE = 'o'
 WIDTH = 640
 HEIGHT = 480
-# SLEEP = 1 / 48
-MAX_GEN = 500
+MAX_GEN = 100
 
 def gen_map():
     map_x = ()
@@ -69,14 +69,17 @@ def save_image(world, gen):
             r = 0 if world[x][y] == DEAD else 255
             img.putpixel((x, y), (r, r, r))
     img.save(imgname)
+    return imgname
 
 def main():
     world, gen = gen_map()
     save_image(world, gen)
 
     for k in range(MAX_GEN):
+        time0 = datetime.datetime.now()
         world, gen = calc_time_step(world, gen)
-        save_image(world, gen)
+        imagename = save_image(world, gen)
+        print('gen: {}, image: {}, {}'.format(gen, imagename, datetime.datetime.now()-time0))
 
 print('='*77)
 main()
