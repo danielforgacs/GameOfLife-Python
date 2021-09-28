@@ -5,9 +5,9 @@ import datetime
 
 DEAD = ' '
 LIVE = 'o'
-WIDTH = 640
-HEIGHT = 480
-MAX_GEN = 100
+WIDTH = 1280
+HEIGHT = 720
+MAX_GEN = 250
 
 def gen_map():
     map_x = ()
