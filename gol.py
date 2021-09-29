@@ -9,10 +9,6 @@ WIDTH = 1280
 HEIGHT = 720
 MAX_GEN = 250
 
-WIDTH = 64
-HEIGHT = 64
-MAX_GEN = 50
-
 def gen_map():
     map_x = ()
     map_x_life = ()
@@ -98,13 +94,13 @@ def save_image(world, gen, world_age):
     for x in range(len(world)):
         for y in range(len(world[x])):
             r = 0 if world[x][y] == DEAD else 255
-            g = world_age[x][y] * 10
+            g = world_age[x][y] * 15
             if g > 255:
                 print(g)
             g = min(255, max(0, g))
             b = 0
             img.putpixel((y, x), (r, g, b))
-    img.resize((0.2, 0.2))
+    # img.resize((5, 5), resample=0)
     img.save(imgname)
     return imgname
 
