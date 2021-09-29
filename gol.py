@@ -23,12 +23,15 @@ def gen_map():
     return map_x, 0, map_x_life
 
 
-def calc_time_step(world, gen):
+def calc_time_step(world, gen, world_age):
     newworld = ()
+    newworld_age = ()
     for x in range(len(world)):
         newline = ()
+        newworld_age_y = ()
         for y in range(len(world[x])):
             neibours = 0
+            old_live = world[x][y]
 
             for i in [-1, 0, 1]:
                 for l in [-1, 0, 1]:
@@ -52,8 +55,21 @@ def calc_time_step(world, gen):
                 if neibours == 3:
                     newvalue = LIVE
             newline = newline+(newvalue,)
+
+            if old_live == DEAD and newvalue == LIVE:
+                new_age = 0
+            elif newvalue == DEAD:
+                new_age = 0
+            elif old_live == LIVE and newvalue == LIVE:
+                new_age = world_age[x][y] + 1
+            else:
+                new_age = '?'
+
+            newworld_age_y = newworld_age_y + (new_age,)
+
         newworld = newworld+ (newline,)
-    return newworld, gen+1
+        newworld_age = newworld_age + (newworld_age_y,)
+    return newworld, gen+1, newworld_age
 
 def print_world(world, gen, world_age):
     print('gen: {} - dimensions: {} x {}: {}'.format(gen, WIDTH, HEIGHT, WIDTH*HEIGHT))
@@ -86,13 +102,11 @@ def main():
     world, gen, world_age = gen_map()
     save_image(world, gen, world_age)
     print_world(world, gen, world_age)
-    sim = ((world, gen, world_age), )
 
     for k in range(MAX_GEN):
         time0 = datetime.datetime.now()
-        world, gen = calc_time_step(world, gen)
+        world, gen, world_age = calc_time_step(world, gen, world_age)
         print_world(world, gen, world_age)
-        sim = sim + ((world, gen, world_age), )
         imagename = save_image(world, gen, world_age)
         print('gen: {}, image: {}, {}'.format(gen, imagename, datetime.datetime.now()-time0))
 
