@@ -104,7 +104,7 @@ def save_image(world, gen, world_age):
             g = min(255, max(0, g))
             b = 0
             img.putpixel((y, x), (r, g, b))
-    img.resize((4, 4))
+    img.resize((0.2, 0.2))
     img.save(imgname)
     return imgname
 
