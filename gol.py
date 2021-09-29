@@ -5,18 +5,32 @@ import datetime
 
 DEAD = ' '
 LIVE = 'o'
-WIDTH = 1280
-HEIGHT = 720
-MAX_GEN = 250
+WIDTH = 32
+HEIGHT = 32
+MAX_GEN = 0
+
+class Pixel:
+    def __init__(self, x, y, is_live):
+        self.x, self.y = x, y
+        self.is_live = True if is_live == LIVE else False
+
+    @property
+    def color(self):
+        return (255, 255, 255) if self.is_live else (0, 0, 0)
 
 def gen_map():
     map_x = ()
+    map_x_2 = ()
     for k in range(HEIGHT):
         map_y = ()
+        map_y_2 = ()
         for j in range(WIDTH):
             map_y = map_y + (random.choice([DEAD, LIVE]), )
+            life = random.choice([DEAD, LIVE])
+            map_y_2 = map_y_2 + (Pixel(k, j, life),)
         map_x = map_x + (map_y,)
-    return map_x, 0
+        map_x_2 = map_x_2 + (map_y_2,)
+    return map_x, 0, map_x_2
 
 
 def calc_time_step(world, gen):
@@ -51,29 +65,32 @@ def calc_time_step(world, gen):
         newworld = newworld+ (newline,)
     return newworld, gen+1
 
-def print_world(world, gen):
+def print_world(world, gen, world_2):
     print('gen: {} - dimensions: {} x {}: {}'.format(gen, WIDTH, HEIGHT, WIDTH*HEIGHT))
     lines = ''
-    for k in world:
+    for k in world_2:
         line = ''
         for xy in k:
-            line += DEAD if xy == DEAD else LIVE
+            line += DEAD if xy.is_live == DEAD else LIVE
         lines += line+'\n'
     print(lines)
 
-def save_image(world, gen):
+def save_image(world, gen, world_2):
     img = Image.new('RGB', (WIDTH, HEIGHT))
     imgname = 'life.{:>04d}.png'.format(gen)
     for x in range(len(world)):
         for y in range(len(world[x])):
-            r = 0 if world[x][y] == DEAD else 255
-            img.putpixel((y, x), (r, r, r))
+            # r = 0 if world[x][y] == DEAD else 255
+            # img.putpixel((y, x), (r, r, r))
+            # print(world_2[x][y].color, world_2[x][y].is_live)
+            img.putpixel((y, x), world_2[x][y].color)
     img.save(imgname)
     return imgname
 
 def main():
-    world, gen = gen_map()
-    save_image(world, gen)
+    world, gen, world_2 = gen_map()
+    save_image(world, gen, world_2)
+    print_world(world, gen, world_2)
 
     for k in range(MAX_GEN):
         time0 = datetime.datetime.now()
