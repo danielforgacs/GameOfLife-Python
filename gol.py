@@ -5,18 +5,22 @@ import datetime
 
 DEAD = ' '
 LIVE = 'o'
-WIDTH = 1280
-HEIGHT = 720
-MAX_GEN = 250
+WIDTH = 16
+HEIGHT = 16
+MAX_GEN = 1
 
 def gen_map():
     map_x = ()
+    map_x_life = ()
     for k in range(HEIGHT):
         map_y = ()
+        map_y_life = ()
         for j in range(WIDTH):
             map_y = map_y + (random.choice([DEAD, LIVE]), )
+            map_y_life = map_y_life + (0, )
         map_x = map_x + (map_y,)
-    return map_x, 0
+        map_x_life = map_x_life + (map_y_life,)
+    return map_x, 0, map_x_life
 
 
 def calc_time_step(world, gen):
@@ -51,17 +55,24 @@ def calc_time_step(world, gen):
         newworld = newworld+ (newline,)
     return newworld, gen+1
 
-def print_world(world, gen):
+def print_world(world, gen, world_age):
     print('gen: {} - dimensions: {} x {}: {}'.format(gen, WIDTH, HEIGHT, WIDTH*HEIGHT))
     lines = ''
+    x = 0
     for k in world:
         line = ''
         for xy in k:
             line += DEAD if xy == DEAD else LIVE
+        line += ' - '
+        y = 0
+        for xy in k:
+            line += str(world_age[x][y])
+            y += 1
+        x += 1
         lines += line+'\n'
     print(lines)
 
-def save_image(world, gen):
+def save_image(world, gen, world_age):
     img = Image.new('RGB', (WIDTH, HEIGHT))
     imgname = 'life.{:>04d}.png'.format(gen)
     for x in range(len(world)):
@@ -72,13 +83,17 @@ def save_image(world, gen):
     return imgname
 
 def main():
-    world, gen = gen_map()
-    save_image(world, gen)
+    world, gen, world_age = gen_map()
+    save_image(world, gen, world_age)
+    print_world(world, gen, world_age)
+    sim = ((world, gen, world_age), )
 
     for k in range(MAX_GEN):
         time0 = datetime.datetime.now()
         world, gen = calc_time_step(world, gen)
-        imagename = save_image(world, gen)
+        print_world(world, gen, world_age)
+        sim = sim + ((world, gen, world_age), )
+        imagename = save_image(world, gen, world_age)
         print('gen: {}, image: {}, {}'.format(gen, imagename, datetime.datetime.now()-time0))
 
 print('='*77)
